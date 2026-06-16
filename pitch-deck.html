@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SignSeal — Pitch Deck</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #171717;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 40px;
+    padding: 40px;
+  }
+  .slide {
+    width: 1280px;
+    height: 720px;
+    background: #fafaf9;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.3);
+    display: flex;
+    flex-direction: column;
+  }
+  .slide-dark { background: #171717; color: #fafaf9; }
+  .slide-center { align-items: center; justify-content: center; text-align: center; }
+  .slide-split { flex-direction: row; }
+
+  /* Slide 1: Title */
+  .s1-header { padding: 48px 64px 32px; display: flex; align-items: center; gap: 16px; }
+  .s1-icon { width: 48px; height: 48px; background: #0f766e; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .s1-brand { font-size: 24px; font-weight: 700; color: #171717; letter-spacing: -0.3px; }
+  .s1-body { flex: 1; display: flex; align-items: center; justify-content: center; padding: 0 64px 64px; }
+  .s1-left { flex: 1; }
+  .s1-headline { font-size: 56px; font-weight: 800; line-height: 1.1; color: #171717; letter-spacing: -1px; margin-bottom: 20px; }
+  .s1-sub { font-size: 20px; line-height: 1.5; color: #78716c; margin-bottom: 32px; max-width: 500px; }
+  .s1-tag { display: inline-block; padding: 8px 20px; background: #0f766e; color: #fafaf9; border-radius: 24px; font-size: 14px; font-weight: 600; }
+  .s1-right { width: 360px; background: #f5f5f4; border-radius: 12px; padding: 24px; text-align: center; }
+  .s1-right-icon { width: 56px; height: 56px; background: #0f766e; border-radius: 12px; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; }
+  .s1-right h3 { font-size: 16px; font-weight: 700; color: #171717; margin-bottom: 8px; }
+  .s1-right p { font-size: 13px; color: #78716c; line-height: 1.5; }
+
+  /* Slide 2: Problem */
+  .s2 { padding: 64px; }
+  .s2-label { font-size: 13px; font-weight: 600; color: #d97706; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .s2-title { font-size: 36px; font-weight: 700; color: #171717; letter-spacing: -0.5px; margin-bottom: 40px; }
+  .s2-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .s2-card { background: #fff; border: 1px solid #e7e5e4; border-radius: 12px; padding: 24px; }
+  .s2-card-num { font-size: 28px; font-weight: 800; color: #d97706; margin-bottom: 8px; }
+  .s2-card-title { font-size: 16px; font-weight: 600; color: #171717; margin-bottom: 8px; }
+  .s2-card-desc { font-size: 14px; color: #78716c; line-height: 1.5; }
+
+  /* Slide 3: Solution */
+  .s3 { padding: 64px; }
+  .s3-label { font-size: 13px; font-weight: 600; color: #0f766e; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .s3-title { font-size: 36px; font-weight: 700; color: #171717; letter-spacing: -0.5px; margin-bottom: 16px; }
+  .s3-sub { font-size: 16px; color: #78716c; line-height: 1.5; margin-bottom: 40px; max-width: 700px; }
+  .s3-steps { display: flex; gap: 24px; }
+  .s3-step { flex: 1; background: #fff; border: 1px solid #e7e5e4; border-radius: 12px; padding: 24px; text-align: center; }
+  .s3-step-num { width: 36px; height: 36px; background: #0f766e; color: #fafaf9; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 16px; margin: 0 auto 16px; }
+  .s3-step-title { font-size: 15px; font-weight: 600; color: #171717; margin-bottom: 8px; }
+  .s3-step-desc { font-size: 13px; color: #78716c; line-height: 1.5; }
+
+  /* Slide 4: Tide tech */
+  .s4 { padding: 64px; }
+  .s4-label { font-size: 13px; font-weight: 600; color: #0f766e; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .s4-title { font-size: 36px; font-weight: 700; color: #171717; letter-spacing: -0.5px; margin-bottom: 40px; }
+  .s4-table { width: 100%; border-collapse: collapse; }
+  .s4-table th { text-align: left; padding: 12px 16px; font-size: 12px; font-weight: 600; color: #a8a29e; text-transform: uppercase; border-bottom: 1px solid #e7e5e4; }
+  .s4-table td { padding: 16px; font-size: 14px; color: #171717; border-bottom: 1px solid #f5f5f4; vertical-align: top; }
+  .s4-table td:first-child { font-weight: 600; color: #0f766e; width: 180px; }
+  .s4-table td:nth-child(2) { width: 340px; color: #57534e; }
+  .s4-table td:last-child { width: 300px; color: #d97706; font-weight: 500; }
+
+  /* Slide 5: App screens */
+  .s5 { padding: 48px 64px; }
+  .s5-label { font-size: 13px; font-weight: 600; color: #0f766e; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+  .s5-title { font-size: 28px; font-weight: 700; color: #171717; letter-spacing: -0.5px; margin-bottom: 32px; }
+  .s5-row { display: flex; gap: 24px; flex: 1; }
+  .s5-screen { flex: 1; background: #fff; border: 1px solid #e7e5e4; border-radius: 12px; overflow: hidden; }
+  .s5-screen-header { background: #f5f5f4; padding: 8px 12px; display: flex; gap: 6px; }
+  .s5-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .s5-screen-title { font-size: 11px; color: #a8a29e; margin-left: 8px; }
+  .s5-screen-content { padding: 24px; }
+  .s5-screen-content h4 { font-size: 15px; font-weight: 600; color: #171717; margin-bottom: 4px; }
+  .s5-screen-content p { font-size: 12px; color: #78716c; margin-bottom: 16px; }
+  .s5-field { margin-bottom: 12px; }
+  .s5-field-label { font-size: 11px; font-weight: 600; color: #57534e; margin-bottom: 4px; }
+  .s5-field-input { width: 100%; padding: 8px 10px; font-size: 12px; border: 1px solid #d6d3d1; border-radius: 6px; background: #fafaf9; color: #171717; }
+  .s5-btn { display: inline-block; padding: 10px 20px; font-size: 13px; font-weight: 600; border-radius: 8px; border: none; color: #fafaf9; cursor: pointer; }
+  .s5-btn-green { background: #0f766e; }
+  .s5-btn-amber { background: #d97706; }
+
+  /* Slide 6: Market */
+  .s6 { padding: 64px; }
+  .s6-label { font-size: 13px; font-weight: 600; color: #d97706; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+  .s6-title { font-size: 36px; font-weight: 700; color: #171717; letter-spacing: -0.5px; margin-bottom: 40px; }
+  .s6-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .s6-card { background: #fff; border: 1px solid #e7e5e4; border-radius: 12px; padding: 28px 24px; }
+  .s6-card-icon { font-size: 28px; margin-bottom: 12px; }
+  .s6-card-title { font-size: 18px; font-weight: 600; color: #171717; margin-bottom: 8px; }
+  .s6-card-stat { font-size: 28px; font-weight: 800; color: #0f766e; margin-bottom: 8px; }
+  .s6-card-desc { font-size: 14px; color: #78716c; line-height: 1.4; }
+
+  /* Slide 7: The Ask */
+  .s7 { align-items: center; justify-content: center; text-align: center; padding: 80px; }
+  .s7-icon { width: 64px; height: 64px; background: #0f766e; border-radius: 14px; margin: 0 auto 24px; display: flex; align-items: center; justify-content: center; }
+  .s7-title { font-size: 40px; font-weight: 700; color: #fafaf9; letter-spacing: -0.5px; margin-bottom: 16px; }
+  .s7-sub { font-size: 18px; color: #a8a29e; line-height: 1.5; max-width: 600px; margin-bottom: 40px; }
+  .s7-points { display: flex; gap: 24px; margin-bottom: 48px; }
+  .s7-point { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 24px; width: 200px; }
+  .s7-point h3 { font-size: 15px; font-weight: 600; color: #fafaf9; margin-bottom: 8px; }
+  .s7-point p { font-size: 13px; color: #a8a29e; line-height: 1.4; }
+  .s7-footer { font-size: 14px; color: #78716c; }
+
+  .foot { font-size: 12px; color: #a8a29e; }
+</style>
+</head>
+<body>
+
+<!-- Slide 1: Title -->
+<div class="slide slide-center">
+  <div style="width: 900px;">
+    <div style="display: flex; align-items: center; gap: 14px; justify-content: center; margin-bottom: 48px;">
+      <div style="width: 56px; height: 56px; background: #0f766e; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#0f766e"/><path d="M8 16.5L13.5 22L24 10" stroke="#fafaf9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span style="font-size: 28px; font-weight: 700; color: #171717; letter-spacing: -0.5px;">SignSeal</span>
+    </div>
+    <h1 style="font-size: 64px; font-weight: 800; color: #171717; letter-spacing: -1.5px; line-height: 1.05; margin-bottom: 20px;">The last e-signature<br>you'll ever pay for.</h1>
+    <p style="font-size: 22px; color: #78716c; line-height: 1.5; margin-bottom: 40px;">Prove who signed what, forever, with no custodian in the middle.</p>
+    <div style="display: inline-block; padding: 10px 28px; background: #0f766e; color: #fafaf9; border-radius: 30px; font-size: 16px; font-weight: 600;">Shark Tank Pitch &mdash; June 2026</div>
+  </div>
+</div>
+
+<!-- Slide 2: Problem -->
+<div class="slide s2">
+  <div class="s2-label">The Problem</div>
+  <div class="s2-title">$5 billion market. One fatal flaw.</div>
+  <div class="s2-grid">
+    <div class="s2-card">
+      <div class="s2-card-num">1B+</div>
+      <div class="s2-card-title">Agreements signed annually</div>
+      <div class="s2-card-desc">DocuSign alone processes over a billion agreements per year. Every single one authenticated with email + click — the same security model as a newsletter signup.</div>
+    </div>
+    <div class="s2-card">
+      <div class="s2-card-num">$25</div>
+      <div class="s2-card-title">Per "envelope" rent</div>
+      <div class="s2-card-desc">DocuSign's core product is renting trust. They hold the keys, run the audit log, vouch for identity. You pay forever for something that should be a mathematical property of the document.</div>
+    </div>
+    <div class="s2-card">
+      <div class="s2-card-num">0</div>
+      <div class="s2-card-title">Platforms that don't hold the keys</div>
+      <div class="s2-card-desc">Every e-signature company on earth is a custodian business model. LastPass breach, SIM-swap fraud, Colonial Pipeline — all exploit the same root cause.</div>
+    </div>
+    <div class="s2-card">
+      <div class="s2-card-num">2046</div>
+      <div class="s2-card-title">Year your DocuSign docs die</div>
+      <div class="s2-card-desc">If DocuSign goes out of business, every "signed" document they hold becomes unverifiable. Try verifying a DocuSign envelope from 2015 without their servers.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 3: Solution -->
+<div class="slide s3">
+  <div class="s3-label">Our Solution</div>
+  <div class="s3-title">SignSeal — a signed document that doesn't need a signing platform.</div>
+  <div class="s3-sub">Not a cheaper DocuSign. The elimination of the platform itself. Every document carries its own proof: signer identity, timestamp, and content integrity — verifiable by anyone, forever, with no custodian in the middle.</div>
+  <div class="s3-steps">
+    <div class="s3-step">
+      <div class="s3-step-num">1</div>
+      <div class="s3-step-title">Prove Identity Once</div>
+      <div class="s3-step-desc">Zero-knowledge threshold authentication via Tide PRISM. No password. No SIM-swappable phone. A live proof no phishing attack can replay.</div>
+    </div>
+    <div class="s3-step">
+      <div class="s3-step-num">2</div>
+      <div class="s3-step-title">Seal & Sign</div>
+      <div class="s3-step-desc">Document is cryptographically sealed with Tide-fragmented keys. No private key exists anywhere — split across independent ORK nodes.</div>
+    </div>
+    <div class="s3-step">
+      <div class="s3-step-num">3</div>
+      <div class="s3-step-title">Verify Anywhere</div>
+      <div class="s3-step-desc">Anyone with the ciphertext verifies the seal, identity, and timestamp without contacting any platform. The proof is self-contained.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 4: Tide Tech -->
+<div class="slide s4">
+  <div class="s4-label">Why Only Tide Makes This Possible</div>
+  <div class="s4-title">Two primitives no competitor can replicate.</div>
+  <table class="s4-table">
+    <tr><th>Tide Primitive</th><th>What We Use It For</th><th>What Breaks Without Tide</th></tr>
+    <tr>
+      <td>doEncrypt / doDecrypt</td>
+      <td>Seal document content under the signer's identity. The platform literally cannot read what you sign. Zero key handling — the user never sees or manages a key.</td>
+      <td>Without Tide self-encryption, we'd need to manage keys ourselves — making us a custodian. The entire "platform can't read your data" pitch collapses.</td>
+    </tr>
+    <tr>
+      <td>DPoP-bound tokens</td>
+      <td>Every signing session is cryptographically bound to the device. A stolen token is inert elsewhere — critical for high-stakes signatures like real estate closings.</td>
+      <td>Without DPoP, token theft = forged signatures. A stolen session cookie could sign documents as you. DPoP makes token exfiltration a non-event.</td>
+    </tr>
+    <tr>
+      <td>Forseti contracts (mocked)</td>
+      <td>Signatures only execute if the contract validates identity, role, and document hash. Policy enforced at the ORK network level, not in app code.</td>
+      <td>Without Forseti, we'd be enforcing signing policy in our own code — making us the very custodian we're trying to eliminate.</td>
+    </tr>
+  </table>
+</div>
+
+<!-- Slide 5: App Screens -->
+<div class="slide s5">
+  <div class="s5-label">The Product</div>
+  <div class="s5-title">Built and running. SignSeal in action.</div>
+  <div class="s5-row">
+    <!-- Sign screen -->
+    <div class="s5-screen">
+      <div class="s5-screen-header">
+        <div class="s5-dot" style="background:#ff5f57"></div>
+        <div class="s5-dot" style="background:#ffbd2e"></div>
+        <div class="s5-dot" style="background:#28ca41"></div>
+        <span class="s5-screen-title">SignSeal — Sign a Document</span>
+      </div>
+      <div class="s5-screen-content">
+        <h4>Seal & Sign</h4>
+        <p>Your document will be cryptographically sealed with your Tide identity. Only you can ever decrypt it.</p>
+        <div class="s5-field">
+          <div class="s5-field-label">Document name</div>
+          <div class="s5-field-input">Employment Agreement</div>
+        </div>
+        <div class="s5-field">
+          <div class="s5-field-label">Document content</div>
+          <div class="s5-field-input" style="height:80px;">This agreement confirms the terms of employment between ACME Corp and Jane Doe, effective June 2, 2026...</div>
+        </div>
+        <div class="s5-btn s5-btn-green">Seal & Sign</div>
+      </div>
+    </div>
+    <!-- Verify screen -->
+    <div class="s5-screen">
+      <div class="s5-screen-header">
+        <div class="s5-dot" style="background:#ff5f57"></div>
+        <div class="s5-dot" style="background:#ffbd2e"></div>
+        <div class="s5-dot" style="background:#28ca41"></div>
+        <span class="s5-screen-title">SignSeal — Verify a Signature</span>
+      </div>
+      <div class="s5-screen-content">
+        <h4>Verify Signature</h4>
+        <p>Paste a sealed document ciphertext. The proof is self-contained — no platform needed.</p>
+        <div class="s5-field">
+          <div class="s5-field-label">Sealed document ciphertext</div>
+          <div class="s5-field-input" style="height:60px; font-family:monospace; font-size:11px;">eyJhbGciOiJFZERTQSIs...</div>
+        </div>
+        <div class="s5-btn s5-btn-amber">Verify</div>
+        <div style="margin-top:16px; padding:12px; background:rgba(217,119,6,0.06); border-radius:8px;">
+          <p style="font-size:11px; color:#d97706; font-weight:600; margin-bottom:4px;">✓ Signature Verified</p>
+          <p style="font-size:11px; color:#78716c;">Document: Employment Agreement<br>Signed by: jane.doe<br>Signed at: 6/2/2026, 10:34 AM</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 6: Market -->
+<div class="slide s6">
+  <div class="s6-label">The Market</div>
+  <div class="s6-title">Anyone who signs anything that matters.</div>
+  <div class="s6-grid">
+    <div class="s6-card">
+      <div class="s6-card-icon">🏠</div>
+      <div class="s6-card-title">Real Estate</div>
+      <div class="s6-card-stat">5M+</div>
+      <div class="s6-card-desc">US home sales per year. Every closing needs notarized signatures. $25/envelope &times; 5M = $125M/year in DocuSign fees alone.</div>
+    </div>
+    <div class="s6-card">
+      <div class="s6-card-icon">⚖️</div>
+      <div class="s6-card-title">Legal</div>
+      <div class="s6-card-stat">$400B</div>
+      <div class="s6-card-desc">Global e-signature market by 2030. Divorce settlements, adoption papers, seven-figure contracts — all need irrefutable proof of who signed what.</div>
+    </div>
+    <div class="s6-card">
+      <div class="s6-card-icon">🏥</div>
+      <div class="s6-card-title">Healthcare</div>
+      <div class="s6-card-stat">100M+</div>
+      <div class="s6-card-desc">Patient consent forms annually in the US. HIPAA requires audit trails. SignSeal makes them self-verifying — subpoena-proof without a custodian.</div>
+    </div>
+    <div class="s6-card">
+      <div class="s6-card-icon">🏢</div>
+      <div class="s6-card-title">Enterprise</div>
+      <div class="s6-card-stat">$50K+</div>
+      <div class="s6-card-desc">Average contract value needing signature. Procurement, vendor agreements, NDAs — every Fortune 500 has a document signing workflow.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Slide 7: The Ask -->
+<div class="slide slide-dark slide-center s7">
+  <div class="s7-icon">
+    <svg width="36" height="36" viewBox="0 0 32 32" fill="none"><rect width="32" height="32" rx="8" fill="#0f766e"/><path d="M8 16.5L13.5 22L24 10" stroke="#fafaf9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </div>
+  <div class="s7-title">We're asking for your vote.</div>
+  <div class="s7-sub">Not to fund a better e-signature platform — but to fund the elimination of the platform itself. A signed document that doesn't need DocuSign.</div>
+  <div class="s7-points">
+    <div class="s7-point">
+      <h3>Zero Custodian</h3>
+      <p>No keys to hold, no audit log to maintain, no trust to rent.</p>
+    </div>
+    <div class="s7-point">
+      <h3>Self-Verifying</h3>
+      <p>Every document carries its own proof. Verifiable in 2046 without us.</p>
+    </div>
+    <div class="s7-point">
+      <h3>Tide-Native</h3>
+      <p>Impossible to build without Tide threshold cryptography.</p>
+    </div>
+  </div>
+  <div class="s7-footer">SignSeal &middot; Trust the seal, not the platform.</div>
+</div>
+
+<p class="foot">SignSeal Pitch Deck — Shark Tank Round 3, June 2026</p>
+</body>
+</html>
